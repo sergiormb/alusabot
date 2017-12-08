@@ -159,7 +159,11 @@ class AlusaBot:
         text = "Ahí tienes"
         if 'partidos_nfl' in callback_text:
             text = "GO!"
-            bot.send_photo(chat_id=user_id, photo=open('../tmp/partidos.jpg', 'rb'))
+            try:
+                bot.send_photo(chat_id=user_id, photo=open('../tmp/partidos.jpg', 'rb'))
+            except:
+                bot.send_message(chat_id=user_id,
+                                 text='Esta gente no me ha mandado los partidos', parse_mode=telegram.ParseMode.HTML)
         elif 'normas' in callback_text:
             text = "Esto es lo que hay"
             bot.send_photo(chat_id=user_id, photo=open('images/normas.jpg', 'rb'))
