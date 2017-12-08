@@ -184,7 +184,7 @@ class AlusaBot:
         user_id = update.message.chat_id
         if user_id == 4455799:
             message_list = message.split(':')
-            if message_list[0] == 'Enviar'
+            if message_list[0] == 'Enviar':
                 text = message_list[1]
                 users = database.get_registers()
                 for user in users:
