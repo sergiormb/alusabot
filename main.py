@@ -179,7 +179,7 @@ class AlusaBot:
         bot.answerCallbackQuery(query.id, text=text)
 
 
-    def echo(bot, update):
+    def echo(self, bot, update):
         message = update.message.text
         user_id = update.message.chat_id
         if user_id == 4455799:
