@@ -124,6 +124,8 @@ class AlusaBot:
         message_dict = update.message.to_dict()
         event_name = update.message.text
         text = 'Elige una de estas opciones:'
+        user_id = update.message.from_user.id
+        register = database.insert_register(user_id)
         button_list = [[
             telegram.InlineKeyboardButton(
                 text='Clasificación', callback_data='clasificacion_nfl'),
@@ -176,6 +178,22 @@ class AlusaBot:
                              text=html, parse_mode=telegram.ParseMode.HTML)
         bot.answerCallbackQuery(query.id, text=text)
 
+
+    def echo(bot, update):
+        message = update.message.text
+        user_id = update.message.chat_id
+        if user_id == 4455799:
+            message_list = message.split(':')
+            if message_list[0] == 'Enviar'
+                text = message_list[1]
+                users = database.get_registers()
+                for user in users:
+                    bot.send_message(
+                        chat_id=user,
+                        text=text,
+                        parse_mode=telegram.ParseMode.HTML
+                    )
+
     def error(self, bot, update, error):
         logger.warning('Update "%s" caused error "%s"' % (update, error))
 
@@ -200,6 +218,7 @@ def main():
         dp.add_handler(CommandHandler("nfl", alusa.nfl))
         dp.add_handler(CommandHandler("porra", alusa.football))
         dp.add_handler(MessageHandler(Filters.photo, alusa.upload_photo))
+        dp.add_handler(MessageHandler(Filters.text, alusa.echo))
 
 
         dp.add_handler(CallbackQueryHandler(alusa.callback_nfl))

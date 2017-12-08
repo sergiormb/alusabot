@@ -65,3 +65,29 @@ def insert_register(user_id):
             conn.close()
 
     return response
+
+
+def get_registers():
+    conn = None
+    result = []
+    try:
+        # read the connection parameters
+        params = config.params
+        # connect to the PostgreSQL server
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT user_id FROM users")
+        row = cur.fetchone()
+
+        while row is not None:
+            result.append(row[0])
+            row = cur.fetchone()
+
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    return result
