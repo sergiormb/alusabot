@@ -38,6 +38,8 @@ class AlusaBot:
         update.message.reply_text('¡Hola! Consulta el estado de todas las porras de Alusa. Escribe /help para más ayuda')
 
     def help(self, bot, update):
+        user_id = update.message.from_user.id
+        register = database.insert_register(user_id)
         html = """
         Consulta el estado de todas las porras de Alusa \n
         /nfl - Clasificación de la NFL \n
@@ -157,6 +159,7 @@ class AlusaBot:
         message_dict = update.callback_query.message.to_dict()
         callback_text = query['data']
         text = "Ahí tienes"
+        register = database.insert_register(user_id)
         if 'partidos_nfl' in callback_text:
             text = "GO!"
             try:
